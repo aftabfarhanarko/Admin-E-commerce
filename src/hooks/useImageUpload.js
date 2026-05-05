@@ -1,11 +1,13 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { getTokens } from "./useToken";
 
-const API_BASE_URL = 'https://e-cdn.vercel.app';
+const IMGBB_API_KEY =
+  (typeof import.meta !== "undefined" && import.meta.env?.VITE_IMGBB_API_KEY) ||
+  (typeof process !== "undefined" && process.env?.REACT_APP_IMGBB_API_KEY) ||
+  "9a222d83ac769876ed9961fa873ebb51";
 
 /**
- * Custom hook for uploading images to backend server
+ * Custom hook for uploading images to ImgBB
  * @returns {Object} { uploadImage, isUploading, error }
  */
 const useImageUpload = () => {
@@ -13,7 +15,7 @@ const useImageUpload = () => {
   const [error, setError] = useState(null);
 
   /**
-   * Upload image to backend server
+   * Upload image to ImgBB
    * @param {File} file - The image file to upload
    * @returns {Promise<string|null>} The image URL or null if upload fails
    */
@@ -41,40 +43,42 @@ const useImageUpload = () => {
     setError(null);
 
     try {
-      // Create FormData with file
+      if (!IMGBB_API_KEY) {
+        throw new Error("ImgBB API key is missing");
+      }
+
+      // Create FormData for ImgBB
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("image", file);
 
-      // Get auth token
-      const { accessToken } = getTokens();
-
-      // Upload to backend server
-      const response = await fetch(`${API_BASE_URL}/upload/image`, {
+      // Upload to ImgBB
+      const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
         method: "POST",
-        headers: {
-          ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
-        },
         body: formData,
       });
 
-      let errorData;
+      let responseData;
       try {
-        errorData = await response.json();
+        responseData = await response.json();
       } catch (e) {
         // If response is not JSON, use status text
-        errorData = { message: response.statusText };
+        responseData = { message: response.statusText };
       }
 
       if (!response.ok) {
-        const errorMessage = errorData?.message || errorData?.error || `Upload failed: ${response.status} ${response.statusText}`;
+        const errorMessage =
+          responseData?.error?.message ||
+          responseData?.message ||
+          `Upload failed: ${response.status} ${response.statusText}`;
         throw new Error(errorMessage);
       }
 
-      if (errorData.success && errorData.url) {
-        toast.success(errorData.message || "Image uploaded successfully");
-        return errorData.url;
+      const imageUrl = responseData?.data?.display_url || responseData?.data?.url;
+      if (responseData?.success && imageUrl) {
+        toast.success("Image uploaded successfully");
+        return imageUrl;
       } else {
-        throw new Error(errorData.message || errorData.error || "Upload failed");
+        throw new Error(responseData?.error?.message || responseData?.message || "Upload failed");
       }
     } catch (err) {
       const errorMessage = err.message || "Failed to upload image";
