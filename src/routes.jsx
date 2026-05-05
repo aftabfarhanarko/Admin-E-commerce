@@ -54,6 +54,7 @@ const CustomerDetailsPage             = lazy(() => import("./pages/customers/det
 const OrdersPage                      = lazy(() => import("./pages/orders"));
 const CreateOrderPage                 = lazy(() => import("./pages/orders/create"));
 const OrderTrackPage                  = lazy(() => import("./pages/orders/track"));
+const PublicOrderTrackingPage         = lazy(() => import("./pages/order-tracking"));
 const OrderViewPage                   = lazy(() => import("./pages/orders/_id"));
 const OrderEditPage                   = lazy(() => import("./pages/orders/_id/edit"));
 const IncompleteOrdersPage            = lazy(() => import("./pages/incomplete-orders"));
@@ -729,6 +730,7 @@ export const routes = createBrowserRouter([
   { path: "/forgot-password",          element: withSuspense(<ForgotPasswordRequestPage />) },
   { path: "/forgot-password/check-email", element: withSuspense(<CheckResetPasswordEmailPage />) },
   { path: "/reset-password",           element: withSuspense(<ResetPasswordPage />) },
+  { path: "/order-tracking",           element: withSuspense(<PublicOrderTrackingPage />) },
   { path: "/p/:id",                    element: withSuspense(<PublicProductDetailPage />) },
   { path: "*",                         element: withSuspense(<ErrorPage />) },
 ]);
