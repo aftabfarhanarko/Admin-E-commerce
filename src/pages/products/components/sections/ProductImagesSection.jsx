@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { X, Plus, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ export default function ProductImagesSection({
 }) {
   const { t } = useTranslation();
   const [isDragging, setIsDragging] = React.useState(false);
+  const fileInputRef = useRef(null);
 
   const handleDragEnter = (e) => {
     e.preventDefault();
@@ -65,6 +66,7 @@ export default function ProductImagesSection({
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
+              onClick={() => fileInputRef.current?.click()}
             >
               <div className="w-10 h-10 mb-2.5 text-indigo-500 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-90 transition-transform duration-300">
                 <Plus className="w-6 h-6" />
@@ -73,6 +75,7 @@ export default function ProductImagesSection({
                 {isDragging ? t("productForm.dropImagesHere", "Drop images here") : t("productForm.uploadFile")}
               </span>
               <input
+                ref={fileInputRef}
                 type="file"
                 accept="image/*"
                 multiple
@@ -85,9 +88,10 @@ export default function ProductImagesSection({
                       isPrimary: false,
                     }));
                     setImageFiles((prev) => [...prev, ...newFiles]);
+                    if (fileInputRef.current) fileInputRef.current.value = "";
                   }
                 }}
-                className="absolute inset-0 opacity-0 cursor-pointer"
+                className="hidden"
               />
             </div>
             <div className="flex-1 min-w-[200px] flex gap-3 items-center">

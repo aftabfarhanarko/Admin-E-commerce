@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { X, Image as ImageIcon } from "lucide-react";
 
@@ -10,6 +10,7 @@ export default function ProductCoverImageSection({
 }) {
   const { t } = useTranslation();
   const [isDragging, setIsDragging] = React.useState(false);
+  const fileInputRef = useRef(null);
 
   const handleDragEnter = (e) => {
     e.preventDefault();
@@ -58,6 +59,7 @@ export default function ProductCoverImageSection({
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
+          onClick={() => fileInputRef.current?.click()}
         >
           {!thumbnailFile && !thumbnailUrl ? (
             <div className="flex flex-col items-center p-6">
@@ -85,6 +87,7 @@ export default function ProductCoverImageSection({
                   e.stopPropagation();
                   setThumbnailFile(null);
                   setThumbnailUrl("");
+                  if (fileInputRef.current) fileInputRef.current.value = "";
                 }}
                 className="absolute top-4 right-4 p-2 bg-white text-slate-400 hover:text-red-500 rounded-full shadow-md hover:shadow-lg transition-all opacity-0 group-hover:opacity-100 transform hover:scale-110"
                 title={t("productForm.removeImage")}
@@ -94,6 +97,7 @@ export default function ProductCoverImageSection({
             </div>
           )}
           <input
+            ref={fileInputRef}
             type="file"
             accept="image/*"
             onChange={(e) => {
@@ -102,7 +106,7 @@ export default function ProductCoverImageSection({
                 setThumbnailUrl("");
               }
             }}
-            className="absolute inset-0 opacity-0 cursor-pointer"
+            className="hidden"
           />
         </div>
         <div className="flex gap-2 items-center">
