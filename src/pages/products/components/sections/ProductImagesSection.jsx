@@ -93,20 +93,21 @@ export default function ProductImagesSection({
                   </span>
                 </>
               )}
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={(e) => {
-                  if (e.target.files?.length) {
-                    handleFiles(Array.from(e.target.files));
-                    if (fileInputRef.current) fileInputRef.current.value = "";
-                  }
-                }}
-                className="hidden"
-              />
             </div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              multiple
+              onClick={(e) => e.stopPropagation()}
+              onChange={(e) => {
+                if (e.target.files?.length) {
+                  handleFiles(Array.from(e.target.files));
+                  if (fileInputRef.current) fileInputRef.current.value = "";
+                }
+              }}
+              className="hidden"
+            />
             <div className="flex-1 min-w-[200px] flex gap-3 items-center">
               <input
                 type="url"

@@ -117,18 +117,20 @@ export default function ProductCoverImageSection({
               </button>
             </div>
           )}
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              if (e.target.files?.[0]) {
-                handleFile(e.target.files[0]);
-              }
-            }}
-            className="hidden"
-          />
         </div>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onClick={(e) => e.stopPropagation()}
+          onChange={(e) => {
+            if (e.target.files?.[0]) {
+              handleFile(e.target.files[0]);
+              if (fileInputRef.current) fileInputRef.current.value = "";
+            }
+          }}
+          className="hidden"
+        />
         <div className="flex gap-2 items-center">
           <span className="text-sm text-slate-500">
             {t("productForm.orPasteImageUrl")}
