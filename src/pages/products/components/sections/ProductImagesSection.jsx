@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { X, Plus, Info } from "lucide-react";
+import { X, Plus, Info, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import useImageUpload from "@/hooks/useImageUpload";
 
 export default function ProductImagesSection({
   imageFiles,
@@ -13,6 +14,19 @@ export default function ProductImagesSection({
   const { t } = useTranslation();
   const [isDragging, setIsDragging] = React.useState(false);
   const fileInputRef = useRef(null);
+  const { uploadImage, isUploading } = useImageUpload();
+
+  const handleFiles = async (files) => {
+    for (const file of files) {
+      const url = await uploadImage(file);
+      if (url) {
+        setImageFiles((prev) => [
+          ...prev,
+          { file: null, url, alt: "", isPrimary: prev.length === 0 },
+        ]);
+      }
+    }
+  };
 
   const handleDragEnter = (e) => {
     e.preventDefault();
@@ -37,13 +51,7 @@ export default function ProductImagesSection({
     e.stopPropagation();
     setIsDragging(false);
     if (e.dataTransfer.files?.length) {
-      const newFiles = Array.from(e.dataTransfer.files).map((file) => ({
-        file,
-        url: "",
-        alt: "",
-        isPrimary: false,
-      }));
-      setImageFiles((prev) => [...prev, ...newFiles]);
+      handleFiles(Array.from(e.dataTransfer.files));
     }
   };
   
@@ -61,19 +69,30 @@ export default function ProductImagesSection({
         <div className="p-6 md:p-8 bg-white dark:bg-slate-900 rounded-[24px] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none transition-all duration-300">
           <div className="flex flex-wrap gap-4 mb-6">
             <div 
-              className={`w-36 h-36 border-2 border-dashed rounded-[20px] flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 relative shrink-0 group ${isDragging ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/20' : 'border-indigo-200 dark:border-indigo-500/20 hover:bg-indigo-50/50 dark:hover:bg-indigo-500/5 hover:border-indigo-400 dark:hover:border-indigo-500/50'}`}
+              className={`w-36 h-36 border-2 border-dashed rounded-[20px] flex flex-col items-center justify-center text-center ${!isUploading ? 'cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-indigo-500/5' : 'cursor-not-allowed'} transition-all duration-300 relative shrink-0 group ${isDragging ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/20' : 'border-indigo-200 dark:border-indigo-500/20 hover:border-indigo-400 dark:hover:border-indigo-500/50'}`}
               onDragEnter={handleDragEnter}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              onClick={() => fileInputRef.current?.click()}
+              onClick={() => !isUploading && fileInputRef.current?.click()}
             >
-              <div className="w-10 h-10 mb-2.5 text-indigo-500 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-90 transition-transform duration-300">
-                <Plus className="w-6 h-6" />
-              </div>
-              <span className="text-xs font-bold text-slate-700 dark:text-slate-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                {isDragging ? t("productForm.dropImagesHere", "Drop images here") : t("productForm.uploadFile")}
-              </span>
+              {isUploading ? (
+                <>
+                  <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mb-2.5" />
+                  <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                    Uploading...
+                  </span>
+                </>
+              ) : (
+                <>
+                  <div className="w-10 h-10 mb-2.5 text-indigo-500 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-90 transition-transform duration-300">
+                    <Plus className="w-6 h-6" />
+                  </div>
+                  <span className="text-xs font-bold text-slate-700 dark:text-slate-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    {isDragging ? t("productForm.dropImagesHere", "Drop images here") : t("productForm.uploadFile")}
+                  </span>
+                </>
+              )}
               <input
                 ref={fileInputRef}
                 type="file"
@@ -81,13 +100,7 @@ export default function ProductImagesSection({
                 multiple
                 onChange={(e) => {
                   if (e.target.files?.length) {
-                    const newFiles = Array.from(e.target.files).map((file) => ({
-                      file,
-                      url: "",
-                      alt: "",
-                      isPrimary: false,
-                    }));
-                    setImageFiles((prev) => [...prev, ...newFiles]);
+                    handleFiles(Array.from(e.target.files));
                     if (fileInputRef.current) fileInputRef.current.value = "";
                   }
                 }}

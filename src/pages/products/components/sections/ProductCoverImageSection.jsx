@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { X, Image as ImageIcon } from "lucide-react";
+import { X, Image as ImageIcon, Loader2 } from "lucide-react";
+import useImageUpload from "@/hooks/useImageUpload";
 
 export default function ProductCoverImageSection({
   thumbnailFile,
@@ -11,6 +12,16 @@ export default function ProductCoverImageSection({
   const { t } = useTranslation();
   const [isDragging, setIsDragging] = React.useState(false);
   const fileInputRef = useRef(null);
+  const { uploadImage, isUploading } = useImageUpload();
+
+  const handleFile = async (file) => {
+    if (!file) return;
+    const url = await uploadImage(file);
+    if (url) {
+      setThumbnailUrl(url);
+      setThumbnailFile(null);
+    }
+  };
 
   const handleDragEnter = (e) => {
     e.preventDefault();
@@ -35,8 +46,7 @@ export default function ProductCoverImageSection({
     e.stopPropagation();
     setIsDragging(false);
     if (e.dataTransfer.files?.[0]) {
-      setThumbnailFile(e.dataTransfer.files[0]);
-      setThumbnailUrl("");
+      handleFile(e.dataTransfer.files[0]);
     }
   };
 
@@ -54,21 +64,32 @@ export default function ProductCoverImageSection({
       </div>
       <div className="col-span-12 lg:col-span-8 space-y-4">
         <div 
-          className={`w-48 h-48 bg-slate-50 dark:bg-slate-900/30 rounded-[24px] border-2 border-dashed flex flex-col items-center justify-center text-center cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-indigo-500/5 transition-all duration-300 group relative overflow-hidden shadow-sm hover:shadow-md ${isDragging ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/20' : 'border-indigo-200 dark:border-indigo-500/20 hover:border-indigo-400 dark:hover:border-indigo-500/50'}`}
+          className={`w-48 h-48 bg-slate-50 dark:bg-slate-900/30 rounded-[24px] border-2 border-dashed flex flex-col items-center justify-center text-center ${!isUploading ? 'cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-indigo-500/5' : 'cursor-not-allowed'} transition-all duration-300 group relative overflow-hidden shadow-sm hover:shadow-md ${isDragging ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/20' : 'border-indigo-200 dark:border-indigo-500/20 hover:border-indigo-400 dark:hover:border-indigo-500/50'}`}
           onDragEnter={handleDragEnter}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          onClick={() => fileInputRef.current?.click()}
+          onClick={() => !isUploading && fileInputRef.current?.click()}
         >
           {!thumbnailFile && !thumbnailUrl ? (
             <div className="flex flex-col items-center p-6">
-              <div className="w-10 h-10 mb-3 bg-white dark:bg-slate-800 rounded-2xl shadow-md shadow-indigo-100 dark:shadow-none flex items-center justify-center text-indigo-500 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
-                <ImageIcon className="w-5 h-5" />
-              </div>
-              <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                {isDragging ? t("productForm.dropThumbnailHere", "Drop image here") : t("productForm.uploadThumbnail")}
-              </h3>
+              {isUploading ? (
+                <>
+                  <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mb-3" />
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-1">
+                    Uploading...
+                  </h3>
+                </>
+              ) : (
+                <>
+                  <div className="w-10 h-10 mb-3 bg-white dark:bg-slate-800 rounded-2xl shadow-md shadow-indigo-100 dark:shadow-none flex items-center justify-center text-indigo-500 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                    <ImageIcon className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    {isDragging ? t("productForm.dropThumbnailHere", "Drop image here") : t("productForm.uploadThumbnail")}
+                  </h3>
+                </>
+              )}
             </div>
           ) : (
             <div className="absolute inset-0 w-full h-full group">
@@ -102,8 +123,7 @@ export default function ProductCoverImageSection({
             accept="image/*"
             onChange={(e) => {
               if (e.target.files?.[0]) {
-                setThumbnailFile(e.target.files[0]);
-                setThumbnailUrl("");
+                handleFile(e.target.files[0]);
               }
             }}
             className="hidden"
