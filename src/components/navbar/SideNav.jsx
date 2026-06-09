@@ -397,7 +397,7 @@ export default function SideNav({ isMobileMenuOpen, setIsMobileMenuOpen }) {
         ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"} 
         bg-white dark:bg-black/95 backdrop-blur-2xl
         border-r border-gray-100 dark:border-white/5
-        flex flex-col transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] shadow-xl lg:shadow-none`}
+        flex flex-col transition-all duration-300 ease-out shadow-xl lg:shadow-none`}
       >
         {/* Brand Header */}
         <div

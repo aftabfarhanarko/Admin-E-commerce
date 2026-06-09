@@ -12,7 +12,10 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
-        primary: "hsl(var(--primary))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
         bg50: "hsl(var(--bg50))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
