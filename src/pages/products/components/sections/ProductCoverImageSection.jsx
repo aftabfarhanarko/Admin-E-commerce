@@ -11,18 +11,27 @@ export default function ProductCoverImageSection({
   const { t } = useTranslation();
   const [isDragging, setIsDragging] = React.useState(false);
 
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
   const handleDragOver = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsDragging(true);
   };
 
   const handleDragLeave = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsDragging(false);
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsDragging(false);
     if (e.dataTransfer.files?.[0]) {
       setThumbnailFile(e.dataTransfer.files[0]);
@@ -45,6 +54,7 @@ export default function ProductCoverImageSection({
       <div className="col-span-12 lg:col-span-8 space-y-4">
         <div 
           className={`w-48 h-48 bg-slate-50 dark:bg-slate-900/30 rounded-[24px] border-2 border-dashed flex flex-col items-center justify-center text-center cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-indigo-500/5 transition-all duration-300 group relative overflow-hidden shadow-sm hover:shadow-md ${isDragging ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/20' : 'border-indigo-200 dark:border-indigo-500/20 hover:border-indigo-400 dark:hover:border-indigo-500/50'}`}
+          onDragEnter={handleDragEnter}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
