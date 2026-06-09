@@ -11,6 +11,31 @@ export default function ProductImagesSection({
   removeImage,
 }) {
   const { t } = useTranslation();
+  const [isDragging, setIsDragging] = React.useState(false);
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files?.length) {
+      const newFiles = Array.from(e.dataTransfer.files).map((file) => ({
+        file,
+        url: "",
+        alt: "",
+        isPrimary: false,
+      }));
+      setImageFiles((prev) => [...prev, ...newFiles]);
+    }
+  };
   
   return (
     <div className="grid grid-cols-12 gap-6 pt-4 border-t border-slate-100 dark:border-slate-800">
@@ -25,12 +50,17 @@ export default function ProductImagesSection({
       <div className="col-span-12 lg:col-span-8">
         <div className="p-6 md:p-8 bg-white dark:bg-slate-900 rounded-[24px] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none transition-all duration-300">
           <div className="flex flex-wrap gap-4 mb-6">
-            <div className="w-36 h-36 border-2 border-dashed border-indigo-200 dark:border-indigo-500/20 rounded-[20px] flex flex-col items-center justify-center text-center cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-indigo-500/5 hover:border-indigo-400 dark:hover:border-indigo-500/50 transition-all duration-300 relative shrink-0 group">
+            <div 
+              className={`w-36 h-36 border-2 border-dashed rounded-[20px] flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 relative shrink-0 group ${isDragging ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/20' : 'border-indigo-200 dark:border-indigo-500/20 hover:bg-indigo-50/50 dark:hover:bg-indigo-500/5 hover:border-indigo-400 dark:hover:border-indigo-500/50'}`}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
               <div className="w-10 h-10 mb-2.5 text-indigo-500 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-90 transition-transform duration-300">
                 <Plus className="w-6 h-6" />
               </div>
               <span className="text-xs font-bold text-slate-700 dark:text-slate-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                {t("productForm.uploadFile")}
+                {isDragging ? t("productForm.dropImagesHere", "Drop images here") : t("productForm.uploadFile")}
               </span>
               <input
                 type="file"

@@ -29,7 +29,7 @@ import CourierSettings from "./components/CourierSettings";
 import BillingSettings from "./components/BillingSettings";
 import ProfileSettings from "./components/ProfileSettings";
 import SmtpSettings from "./components/SmtpSettings";
-import FraudCheckerSettings from "./components/FraudCheckerSettings";
+
 import ReceiptSettings from "./components/ReceiptSettings";
 
 const SettingsPage = () => {
@@ -61,7 +61,7 @@ const SettingsPage = () => {
     { id: "courier", label: "Courier Integration", icon: Truck },
     { id: "billings", label: "Billings", icon: CreditCard },
     { id: "smtp", label: "SMTP", icon: Mail },
-    { id: "fraud-checker", label: "Fraud Checker", icon: ShieldCheck },
+
     { id: "receipt-print", label: "Receipt Print URL", icon: Printer },
   ];
 
@@ -100,8 +100,7 @@ const SettingsPage = () => {
         return <BillingSettings user={currentUser} />;
       case "smtp":
         return <SmtpSettings />;
-      case "fraud-checker":
-        return <FraudCheckerSettings />;
+
       case "receipt-print":
         return <ReceiptSettings />;
       default:

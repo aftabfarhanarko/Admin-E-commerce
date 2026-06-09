@@ -9,6 +9,26 @@ export default function ProductCoverImageSection({
   setThumbnailUrl,
 }) {
   const { t } = useTranslation();
+  const [isDragging, setIsDragging] = React.useState(false);
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files?.[0]) {
+      setThumbnailFile(e.dataTransfer.files[0]);
+      setThumbnailUrl("");
+    }
+  };
 
   return (
     <div className="grid grid-cols-12 gap-6">
@@ -23,14 +43,19 @@ export default function ProductCoverImageSection({
         </p>
       </div>
       <div className="col-span-12 lg:col-span-8 space-y-4">
-        <div className="w-48 h-48 bg-slate-50 dark:bg-slate-900/30 rounded-[24px] border-2 border-dashed border-indigo-200 dark:border-indigo-500/20 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-indigo-500/5 hover:border-indigo-400 dark:hover:border-indigo-500/50 transition-all duration-300 group relative overflow-hidden shadow-sm hover:shadow-md">
+        <div 
+          className={`w-48 h-48 bg-slate-50 dark:bg-slate-900/30 rounded-[24px] border-2 border-dashed flex flex-col items-center justify-center text-center cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-indigo-500/5 transition-all duration-300 group relative overflow-hidden shadow-sm hover:shadow-md ${isDragging ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/20' : 'border-indigo-200 dark:border-indigo-500/20 hover:border-indigo-400 dark:hover:border-indigo-500/50'}`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
           {!thumbnailFile && !thumbnailUrl ? (
             <div className="flex flex-col items-center p-6">
               <div className="w-10 h-10 mb-3 bg-white dark:bg-slate-800 rounded-2xl shadow-md shadow-indigo-100 dark:shadow-none flex items-center justify-center text-indigo-500 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                 <ImageIcon className="w-5 h-5" />
               </div>
               <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                {t("productForm.uploadThumbnail")}
+                {isDragging ? t("productForm.dropThumbnailHere", "Drop image here") : t("productForm.uploadThumbnail")}
               </h3>
             </div>
           ) : (

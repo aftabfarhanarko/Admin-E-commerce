@@ -51,33 +51,33 @@ html[lang="bn"] * {
 
 @layer base {
   :root {
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 211 63% 14%;
+    --primary-foreground: 30 80% 96%;
 
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary: 351 41% 64%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --muted: 30 20% 90%;
+    --muted-foreground: 211 20% 40%;
 
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    --accent: 351 41% 64%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --border: 30 20% 90%;
+    --input: 30 20% 90%;
+    --ring: 211 63% 14%;
 
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    --background: 30 80% 96%;
+    --foreground: 211 63% 14%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 211 63% 14%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    --popover-foreground: 211 63% 14%;
 
     --radius: 0.75rem;
 
@@ -88,40 +88,40 @@ html[lang="bn"] * {
     --chart-5: 27 87% 67%;
 
     /* Nexus brand colors (overridable by user custom color in Preferences) */
-    --nexus-primary: #5347CE;
-    --nexus-secondary: #887CFD;
+    --nexus-primary: #0d233a;
+    --nexus-secondary: #c77e85;
   }
 
   .dark {
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
+    --primary: 351 41% 64%;
+    --primary-foreground: 211 63% 14%;
 
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 211 63% 14%;
+    --secondary-foreground: 30 80% 96%;
 
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
+    --muted: 211 63% 14%;
+    --muted-foreground: 30 20% 70%;
 
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 211 63% 14%;
+    --accent-foreground: 30 80% 96%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --border: 211 63% 20%;
+    --input: 211 63% 20%;
+    --ring: 351 41% 64%;
 
     --background: 220 14% 4%;
     /* #0b0f14 */
-    --foreground: 0 0% 98%;
+    --foreground: 30 80% 96%;
 
     --card: 216 19% 13%;
     /* #1a1f26 */
-    --card-foreground: 0 0% 98%;
+    --card-foreground: 30 80% 96%;
 
     --popover: 216 19% 13%;
-    --popover-foreground: 0 0% 98%;
+    --popover-foreground: 30 80% 96%;
 
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
@@ -139,6 +139,11 @@ html[lang="bn"] * {
   body {
     @apply bg-gray-100 dark:bg-[#0b0f14] text-gray-900 dark:text-gray-100;
     overflow-x: hidden;
+  }
+
+  /* Make sure all basic buttons use the primary color */
+  button:not([class*="bg-"]):not([class*="variant-"]) {
+    @apply bg-primary text-primary-foreground;
   }
 }
 
