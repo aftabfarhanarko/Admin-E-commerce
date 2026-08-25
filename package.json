@@ -84,5 +84,11 @@
   },
   "overrides": {
     "picomatch": "4.0.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "core-js",
+      "esbuild"
+    ]
   }
 }
