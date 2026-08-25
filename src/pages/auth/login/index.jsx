@@ -214,6 +214,7 @@ const LoginPage = () => {
                   placeholder="people05squadcart@gmail.com"
                   type="email"
                   register={register}
+                  registerOptions={{ required: "Email is required" }}
                   name="email"
                   disabled={isLoading}
                   icon={<Mail size={18} />}
@@ -230,6 +231,7 @@ const LoginPage = () => {
                   <TextField
                     placeholder="Enter password"
                     register={register}
+                    registerOptions={{ required: "Password is required" }}
                     name="password"
                     type="password"
                     disabled={isLoading}
@@ -251,9 +253,10 @@ const LoginPage = () => {
             </div>
 
             <SubmitButton
+              type="submit"
               isLoading={isLoading}
               disabled={isLoading}
-              className="w-full !bg-gradient-to-r !from-[#7c3aed] !to-[#6d28d9] hover:!from-[#6d28d9] hover:!to-[#5b21b6] !text-white !font-bold !py-4 !rounded-xl !mt-4 shadow-indigo-500/30 hover:shadow-indigo-500/40 transform hover:-translate-y-0.5 transition-all duration-300"
+              className="w-full !bg-gradient-to-r !from-[#7c3aed] !to-[#6d28d9] hover:!from-[#6d28d9] hover:!to-[#5b21b6] !text-white !font-bold !py-4 !rounded-xl !mt-4 shadow-indigo-500/30 hover:shadow-indigo-500/40 transform hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
             >
               {isLoading ? t("auth.loggingIn") : "Sign In to Console"}
             </SubmitButton>
