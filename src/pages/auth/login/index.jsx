@@ -106,10 +106,22 @@ const LoginPage = () => {
       }
 
       // 2nd: Try superadmin login if systemuser failed
-      const superadminResult = await superadminLogin({
-        email: loginCredential,
-        password: data.password,
-      }).unwrap();
+      let superadminResult;
+      try {
+        superadminResult = await superadminLogin({
+          email: loginCredential,
+          password: data.password,
+        }).unwrap();
+      } catch (superadminErr) {
+        // Both failed, show exact error toast
+        const errorMessage =
+          loginRes?.error?.data?.message ||
+          superadminErr?.data?.message ||
+          "Invalid email or password";
+        
+        toast.error(typeof errorMessage === "string" ? errorMessage : "Invalid email or password");
+        return;
+      }
 
       let accessToken = null;
       let refreshToken = null;
@@ -132,7 +144,7 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.error("Login failed:", error);
-      toast.error(error?.data?.message || t("auth.loginFailedGeneric"));
+      toast.error(error?.data?.message || "Invalid email or password");
     }
   };
 

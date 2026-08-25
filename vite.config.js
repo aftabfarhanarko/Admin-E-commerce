@@ -28,6 +28,9 @@ export default defineConfig({
   },
 
   server: {
+    watch: {
+      ignored: ["**/.pnpm-store/**", "**/node_modules/**"],
+    },
     proxy: {
       "/pathao-api": {
         target: "https://api-hermes.pathao.com",
