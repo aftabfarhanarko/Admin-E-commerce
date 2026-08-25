@@ -34,7 +34,7 @@ const DashboardPage = () => {
     return t("dashboard.goodNight");
   };
 
-  const companyName = authUser?.companyName || authUser?.company?.name || authUser?.storeName || authUser?.name || "SquadCart";
+  const companyName = authUser?.companyName || authUser?.company?.name || authUser?.storeName || authUser?.name || "Admin Console";
 
   const { data: dashboardData, isLoading } = useGetDashboardQuery(
     { companyId: authUser?.companyId },

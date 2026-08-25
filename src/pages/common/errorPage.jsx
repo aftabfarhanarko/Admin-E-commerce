@@ -51,7 +51,7 @@ const ErrorPage = () => {
             <ShoppingCart className="w-5 h-5 text-white fill-white" />
           </div>
           <span className="text-xl font-bold text-slate-900 tracking-tight">
-            SquadCart
+            Admin Console
           </span>
         </Link>
       </motion.header>

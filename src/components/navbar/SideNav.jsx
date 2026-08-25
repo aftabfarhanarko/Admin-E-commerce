@@ -368,7 +368,7 @@ export default function SideNav({ isMobileMenuOpen, setIsMobileMenuOpen }) {
     user?.company?.name ||
     user?.storeName ||
     user?.name ||
-    "SquadCart";
+    "Admin Console";
   const companyLogo = user?.companyLogo || user?.company?.logo || user?.logo;
 
   const handleLogout = useCallback(() => {

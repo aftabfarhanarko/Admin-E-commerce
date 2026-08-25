@@ -25,25 +25,25 @@ const useAuth = () => {
 
     // Show loading state while fetching user data
     if (isLoading) {
-      document.title = "Loading... - SquadCart Console";
+      document.title = "Loading... - Admin Console";
       return;
     }
 
     // Set authChecked to true when authenticated
     setAuthChecked(true);
 
-    if (isSuccess && data) {
-      // Store user details in Redux
+    if (data) {
+      // Dispatch user details to store
       dispatch(userDetailsFetched(data));
       
       // Update document title with company name and company ID from API
-      const companyName = data.companyName || "SquadCart";
+      const companyName = data.companyName || "Admin Console";
       const companyId = data.companyId || "";
       
       if (companyId) {
-        document.title = `${companyName} (${companyId}) - SquadCart Console`;
+        document.title = `${companyName} (${companyId}) - Admin Console`;
       } else {
-        document.title = `${companyName} - SquadCart Console`;
+        document.title = `${companyName} - Admin Console`;
       }
     }
   }, [

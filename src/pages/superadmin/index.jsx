@@ -137,7 +137,7 @@ const SuperAdminOverviewPage = () => {
           {/* Left Side: Greeting */}
           <div className="space-y-2 w-full md:w-auto">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[#1e1b4b] dark:text-white">
-              {getGreeting()}, SquadCart
+              {getGreeting()}, Admin
             </h1>
             <div className="flex items-center gap-2 text-xs sm:text-sm md:text-base font-medium text-slate-500 dark:text-slate-400 flex-wrap">
               <span className="relative flex h-3 w-3">

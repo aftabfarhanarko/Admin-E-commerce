@@ -81,7 +81,7 @@ const SuperAdminSideNav = ({ onLinkClick }) => {
         </div>
         <div className="flex flex-col">
           <span className="font-bold text-lg tracking-tight text-slate-900 dark:text-white">
-            SquadCart
+            Admin Console
           </span>
           <span className="text-[10px] font-semibold uppercase tracking-wider text-violet-600 dark:text-violet-400">
             Super Admin

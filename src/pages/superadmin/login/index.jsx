@@ -136,7 +136,7 @@ const SuperAdminLoginPage = () => {
 
                     <div className="mt-8 text-center">
                         <p className="text-xs text-slate-400 dark:text-slate-500">
-                            Secured by SquadCart Console
+                            Secured by Admin Console
                         </p>
                     </div>
                 </div>

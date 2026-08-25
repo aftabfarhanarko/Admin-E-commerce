@@ -259,7 +259,7 @@ export default function BannersOffersPage() {
 
       {/* --- FOOTER --- */}
       <footer className="mt-20 pt-8 border-t border-gray-50 dark:border-gray-800 flex justify-between items-center text-[10px] text-gray-400 font-black uppercase tracking-widest">
-         <span>SquadCart Promo Engine v2.0</span>
+         <span>Console Promo Engine v2.0</span>
          <div className="flex items-center gap-2">
             <span>Powered by</span>
             <span className="text-[#0066ff]">Kanakku Creative Hub</span>

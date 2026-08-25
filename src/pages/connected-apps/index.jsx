@@ -306,88 +306,80 @@ export default function ConnectedAppsPage() {
       name: "Loom",
       url: "https://loom.com",
       description:
-        "Connect SquadCart with Loom to automatically capture, transcribe, and organize video messages.",
-      icon: <BrandIcons.Loom className="w-6 h-6" />,
+        "Connect with Loom to automatically capture, transcribe, and organize video messages.",
+      icon: Loom,
+      tags: ["Video"],
+      actionLabel: "Connect",
       status: true,
     },
     {
-      id: 2,
       name: "Dropbox",
-      url: "https://dropbox.com",
       description:
-        "Connect SquadCart with Dropbox to capture, transcribe, and organize video insights automatically",
-      icon: <BrandIcons.Dropbox className="w-6 h-6" />,
+        "Connect with Dropbox to capture, transcribe, and organize video insights automatically",
+      icon: Dropbox,
+      tags: ["Storage"],
+      actionLabel: "Connect",
       status: false,
     },
     {
-      id: 3,
       name: "Zapier",
-      url: "https://zapier.com",
       description:
-        "Connect SquadCart with Zapier to automate workflows between SquadCart and thousands of apps, enabling seamless data",
-      icon: <BrandIcons.Zapier className="w-6 h-6" />,
+        "Connect with Zapier to automate workflows between our platform and thousands of apps, enabling seamless data",
+      icon: Zapier,
+      tags: ["Workflow"],
+      actionLabel: "Connect",
       status: true,
     },
     {
-      id: 4,
-      name: "Github",
-      url: "https://github.com",
+      name: "GitHub",
       description:
-        "Connect SquadCart with Github to track repositories, pull requests, and commits, allowing SquadCart to",
-      icon: (
-        <BrandIcons.Github className="w-6 h-6 text-gray-900 dark:text-white" />
-      ),
+        "Connect with Github to track repositories, pull requests, and commits, allowing our platform to",
+      icon: Github,
+      tags: ["Developer"],
+      actionLabel: "Connect",
       status: true,
     },
     {
-      id: 5,
       name: "Jira",
-      url: "https://jira.atlassian.com",
       description:
-        "Connect SquadCart with Jira to sync issues, tickets, and project updates, giving SquadCart full context to analyze progress",
-      icon: <BrandIcons.Jira className="w-6 h-6" />,
+        "Connect with Jira to sync issues, tickets, and project updates, giving full context to analyze progress",
+      icon: Jira,
+      tags: ["Developer"],
+      actionLabel: "Connect",
       status: false,
     },
     {
-      id: 6,
       name: "Confluence",
-      url: "https://confluence.atlassian.com",
       description:
-        "Connect SquadCart with Confluence to centralize documentation, sync knowledge, and enhance",
-      icon: <BrandIcons.Confluence className="w-6 h-6" />,
+        "Connect with Confluence to centralize documentation, sync knowledge, and enhance",
+      icon: Confluence,
+      tags: ["Developer"],
+      actionLabel: "Connect",
       status: false,
     },
   ];
 
   const recommendedApps = [
     {
-      id: 7,
-      name: "Gitlab",
-      url: "https://gitlab.com",
+      name: "GitLab",
       description:
-        "Integrate SquadCart with GitLab to seamlessly sync your repositories and manage issues more effectively.",
-      icon: <BrandIcons.Gitlab className="w-5 h-5" />,
-      rating: 5.0,
-      connectedCount: "100K+",
+        "Integrate with GitLab to seamlessly sync your repositories and manage issues more effectively.",
+      icon: Gitlab,
+      tags: ["Developer"],
+      actionLabel: "Connect",
     },
     {
-      id: 8,
       name: "Notion",
-      url: "https://notion.com",
       description:
-        "Integrate SquadCart with Notion to effectively centralize all your notes and tasks in one convenient location.",
-      icon: (
-        <BrandIcons.Notion className="w-5 h-5 text-gray-900 dark:text-white" />
-      ),
-      rating: 5.0,
-      connectedCount: "1M+",
+        "Integrate with Notion to effectively centralize all your notes and tasks in one convenient location.",
+      icon: Notion,
+      tags: ["Developer"],
+      actionLabel: "Connect",
     },
     {
-      id: 9,
       name: "Gmail",
-      url: "https://gmail.com",
       description:
-        "Integrate SquadCart with your Gmail account to seamlessly extract valuable insights and actionable items.",
+        "Integrate with your Gmail account to seamlessly extract valuable insights and actionable items.",
       icon: <BrandIcons.Gmail className="w-5 h-5" />,
       rating: 4.9,
       connectedCount: "1M+",
@@ -550,7 +542,7 @@ export default function ConnectedAppsPage() {
               Your Integrations
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              View, connect, and manage your integrations with SquadCart.
+              View, connect, and manage your integrations.
             </p>
           </div>
           <Button variant="ghost" size="icon" className="text-gray-400">
